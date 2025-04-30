@@ -349,7 +349,12 @@ curl http://localhost:${port}/health
   `);
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`JSON to CSV API running on http://localhost:${port}`);
-});
+// Export the Express API for standard Node.js environments
+if (process.env.NODE_ENV !== 'vercel') {
+    app.listen(port, () => {
+        console.log(`JSON to CSV API running on http://localhost:${port}`);
+    });
+}
+
+// Export the Express API for Vercel serverless functions
+module.exports = app;
