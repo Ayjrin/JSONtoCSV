@@ -1,4 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // API Dropdown Toggle
+    const apiDropdownBtn = document.getElementById('apiDropdownBtn');
+    const apiDropdownContent = document.getElementById('apiDropdownContent');
+    
+    if (apiDropdownBtn && apiDropdownContent) {
+        apiDropdownBtn.addEventListener('click', function() {
+            apiDropdownContent.classList.toggle('show');
+            
+            // Change the dropdown arrow
+            if (apiDropdownContent.classList.contains('show')) {
+                apiDropdownBtn.innerHTML = 'API Documentation ▲';
+            } else {
+                apiDropdownBtn.innerHTML = 'API Documentation ▼';
+            }
+        });
+        
+        // Close the dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!apiDropdownBtn.contains(event.target) && !apiDropdownContent.contains(event.target)) {
+                apiDropdownContent.classList.remove('show');
+                apiDropdownBtn.innerHTML = 'API Documentation ▼';
+            }
+        });
+    }
+    
     // DOM Elements
     const dropArea = document.getElementById('dropArea');
     const fileInput = document.getElementById('fileInput');

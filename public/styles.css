@@ -152,3 +152,90 @@ h2 {
     color: #7f8c8d;
     margin-bottom: 1rem;
 }
+
+/* API Documentation Styles */
+.api-section {
+    margin-top: 2rem;
+}
+
+.api-dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.api-dropdown-btn {
+    width: 100%;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #2c3e50;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.api-dropdown-btn:hover {
+    background-color: #e9ecef;
+}
+
+.api-dropdown-content {
+    display: none;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 0 0 8px 8px;
+    padding: 1.5rem;
+    margin-top: -1px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.api-dropdown-content.show {
+    display: block;
+}
+
+.api-dropdown-content h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.api-dropdown-content h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #3498db;
+}
+
+.api-dropdown-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.api-dropdown-content ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.api-dropdown-content code {
+    background-color: #f8f9fa;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.api-dropdown-content pre {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.api-dropdown-content pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-family: monospace;
+    white-space: pre-wrap;
+}

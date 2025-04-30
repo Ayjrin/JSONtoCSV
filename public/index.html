@@ -33,6 +33,51 @@
                 <button id="downloadBtn" class="download-btn" disabled>Download CSV</button>
             </div>
         </div>
+        
+        <div class="api-section">
+            <div class="api-dropdown">
+                <button class="api-dropdown-btn" id="apiDropdownBtn">API Documentation ▼</button>
+                <div class="api-dropdown-content" id="apiDropdownContent">
+                    <h2>API Documentation</h2>
+                    <p>This application provides RESTful API endpoints for converting JSON to CSV programmatically.</p>
+                    
+                    <h3>Convert JSON Data</h3>
+                    <p><strong>Endpoint:</strong> <code>POST /api/convert</code></p>
+                    <p><strong>Request:</strong></p>
+                    <ul>
+                        <li>Content-Type: application/json</li>
+                        <li>Body: JSON data to convert</li>
+                    </ul>
+                    <p><strong>Example:</strong></p>
+                    <pre><code>curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John","age":30}' \
+  https://convert-json-csv.vercel.app/api/convert \
+  -o result.csv</code></pre>
+                    
+                    <h3>Convert JSON File</h3>
+                    <p><strong>Endpoint:</strong> <code>POST /api/convert/file</code></p>
+                    <p><strong>Request:</strong></p>
+                    <ul>
+                        <li>Content-Type: multipart/form-data</li>
+                        <li>Form field: jsonFile (file upload)</li>
+                    </ul>
+                    <p><strong>Example:</strong></p>
+                    <pre><code>curl -X POST \
+  -F "jsonFile=@path/to/your/file.json" \
+  https://convert-json-csv.vercel.app/api/convert/file \
+  -o result.csv</code></pre>
+                    
+                    <h3>Supported JSON Formats</h3>
+                    <ul>
+                        <li>Arrays of objects (most common format)</li>
+                        <li>Single objects</li>
+                        <li>Nested structures (will be properly escaped in CSV)</li>
+                        <li>Mixed data types</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
     
     <script src="./script.js"></script>
