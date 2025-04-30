@@ -39,3 +39,4 @@ out/
 !package-lock.json
 !api/package.json
 !api/test-samples/*.json
+!vercel.json
