@@ -1,16 +1,20 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
+
+// Set up multer for file uploads
 const upload = multer({ storage: multer.memoryStorage() });
 
 // Create a router for this endpoint
 const app = express();
 
 // Enable CORS
-app.use(cors());
-
-// Parse JSON request body
-app.use(express.json({ limit: '50mb' }));
+app.use(cors({
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+}));
 
 // Function to convert JSON to CSV
 function jsonToCSV(jsonData) {
@@ -137,10 +141,22 @@ function jsonToCSV(jsonData) {
   return csv;
 }
 
-// API endpoint for direct JSON conversion
-app.post('/', (req, res) => {
+// API endpoint for file upload conversion
+app.post('/api/convert/file', upload.single('jsonFile'), (req, res) => {
   try {
-    const jsonData = req.body;
+    if (!req.file) {
+      return res.status(400).send('No file uploaded');
+    }
+    
+    const fileContent = req.file.buffer.toString('utf8');
+    let jsonData;
+    
+    try {
+      jsonData = JSON.parse(fileContent);
+    } catch (parseError) {
+      return res.status(400).send('Invalid JSON file: ' + parseError.message);
+    }
+    
     const csv = jsonToCSV(jsonData);
     
     res.setHeader('Content-Type', 'text/csv');
