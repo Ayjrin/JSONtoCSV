@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=JSON to CSV
+GenericName=JSON to CSV Converter
+Comment=Convert JSON files to CSV format
+Icon=/home/ayjrin/Desktop/Work/ramdomSmallThings/JSONtoCSV/assets/icons/linux/icon.png
+Exec=/home/ayjrin/Desktop/Work/ramdomSmallThings/JSONtoCSV/json-to-csv.sh
+Terminal=false
+Categories=Utility;Development;
+Keywords=json;csv;converter;
+StartupNotify=true

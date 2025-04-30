@@ -1,0 +1,44 @@
+{
+  "primitiveValue": "This is a simple string",
+  "numberValue": 42,
+  "booleanValue": true,
+  "nullValue": null,
+  "simpleArray": [1, 2, 3, 4, 5],
+  "arrayOfObjects": [
+    {
+      "id": 1,
+      "name": "Product A",
+      "price": 29.99,
+      "tags": ["electronics", "gadgets"]
+    },
+    {
+      "id": 2,
+      "name": "Product B",
+      "price": 49.99,
+      "tags": ["home", "kitchen"]
+    },
+    {
+      "id": 3,
+      "name": "Product C",
+      "price": 19.99,
+      "tags": ["clothing", "accessories"],
+      "extraField": "This field doesn't exist in other objects"
+    }
+  ],
+  "nestedObject": {
+    "property1": "value1",
+    "property2": 123,
+    "deeplyNested": {
+      "level1": {
+        "level2": "Deep value"
+      }
+    }
+  },
+  "mixedArray": [
+    "string value",
+    42,
+    true,
+    {"key": "value"},
+    [1, 2, 3]
+  ]
+}
