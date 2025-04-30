@@ -2,14 +2,7 @@
   "version": 2,
   "buildCommand": "cd api && npm install",
   "outputDirectory": "public",
-  "functions": {
-    "api/server.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
   "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/server.js" },
     { "source": "/static/:path*", "destination": "/public/:path*" },
     { "source": "/", "destination": "/public/index.html" },
     { "source": "/:path*", "destination": "/public/:path*" }
