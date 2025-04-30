@@ -32,11 +32,11 @@ out/
 # Temporary files from packaging
 *.tmp
 
-# Data files
+# JSON and CSV files
 *.json
-*.csv
 !package.json
 !package-lock.json
-!api/package.json
-!api/test-samples/*.json
 !vercel.json
+!vercel-package.json
+*.csv
+!api/test-samples/*.json
