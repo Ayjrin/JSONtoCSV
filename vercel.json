@@ -1,12 +1,10 @@
 {
   "version": 2,
-  "buildCommand": "cp vercel-package.json package.json && npm install",
+  "buildCommand": "npm install",
   "outputDirectory": "public",
   "rewrites": [
-    { "source": "/api", "destination": "/api/index.js" },
-    { "source": "/api/(.*)", "destination": "/api/index.js" },
-    { "source": "/", "destination": "/public/index.html" },
-    { "source": "/:path*", "destination": "/public/:path*" }
+    { "source": "/api/(.*)", "destination": "/server.js" },
+    { "source": "/(.*)", "destination": "/server.js" }
   ],
   "headers": [
     {

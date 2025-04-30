@@ -1,15 +1,12 @@
 {
   "name": "json-to-csv",
-  "productName": "JSON to CSV",
   "version": "1.0.0",
   "description": "JSON to CSV Converter",
-  "main": "main.js",
+  "main": "server.js",
+  "type": "commonjs",
   "scripts": {
-    "start": "electron .",
-    "build": "electron-builder --win --linux",
-    "build:win": "electron-builder --win",
-    "build:linux": "electron-builder --linux",
-    "build:mac": "electron-builder --mac"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [
     "json",
@@ -18,45 +15,12 @@
   ],
   "author": "Your Name",
   "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1"
+  },
   "devDependencies": {
-    "electron": "^29.4.6",
-    "electron-builder": "^24.9.1",
-    "electron-packager": "^17.1.2"
-  },
-  "build": {
-    "appId": "com.yourname.jsontocsv",
-    "productName": "JSON to CSV",
-    "directories": {
-      "output": "dist"
-    },
-    "files": [
-      "src/**/*",
-      "main.js",
-      "preload.js",
-      "assets/**/*"
-    ],
-    "win": {
-      "icon": "assets/icons/linux/icon.png",
-      "target": [
-        "portable",
-        "nsis"
-      ]
-    },
-    "linux": {
-      "icon": "assets/icons/linux/icon.png",
-      "target": [
-        "AppImage",
-        "deb"
-      ],
-      "category": "Utility"
-    },
-    "mac": {
-      "icon": "assets/icons/linux/icon.png",
-      "target": [
-        "dmg"
-      ],
-      "category": "public.app-category.utilities"
-    }
-  },
-  "type": "commonjs"
+    "nodemon": "^3.0.1"
+  }
 }

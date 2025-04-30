@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Variables
     let fileName = '';
     let csvData = '';
-    let droppedFile = null; // Store the dropped file for API integration
     
     // Event Listeners for Drag and Drop
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -60,9 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (file.type === 'application/json' || file.name.endsWith('.json')) {
                 fileName = file.name.replace('.json', '');
                 inputFileName.textContent = `File: ${file.name}`;
-                
-                // Store the file for API integration
-                droppedFile = file;
                 
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -116,85 +112,62 @@ document.addEventListener('DOMContentLoaded', function() {
         if (csvData) {
             const outputFileName = fileName ? `${fileName}.csv` : 'data.csv';
             
-            // Check if we're in Electron environment
-            if (window.electronAPI) {
-                // Use Electron's IPC for file saving
-                window.electronAPI.saveFile({
-                    fileName: outputFileName,
-                    csvContent: csvData
-                }).then(result => {
-                    if (result.success) {
-                        alert(`CSV file saved to: ${result.filePath}`);
-                    }
-                }).catch(err => {
-                    console.error('Failed to save file:', err);
-                    // Fallback to browser download if Electron save fails
+            // Use the server API for conversion when possible
+            if (fileName && droppedFile) {
+                // If we have a file, use the file upload endpoint
+                const formData = new FormData();
+                formData.append('jsonFile', droppedFile);
+                
+                fetch('/api/convert/file', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.blob())
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = outputFileName;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Fallback to client-side download
                     downloadCSV(csvData, outputFileName);
                 });
             } else {
-                // Check if we're on Vercel deployment
-                if (window.location.hostname.includes('vercel.app')) {
-                    // Use the API endpoint to convert and download
-                    if (fileName && droppedFile) {
-                        // If we have a file, use the file upload endpoint
-                        const formData = new FormData();
-                        formData.append('jsonFile', droppedFile);
-                        
-                        fetch('/api/convert/file', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.blob())
-                        .then(blob => {
-                            const url = window.URL.createObjectURL(blob);
-                            const a = document.createElement('a');
-                            a.href = url;
-                            a.download = outputFileName;
-                            document.body.appendChild(a);
-                            a.click();
-                            window.URL.revokeObjectURL(url);
-                            document.body.removeChild(a);
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            // Fallback to client-side download
-                            downloadCSV(csvData, outputFileName);
-                        });
-                    } else {
-                        // If we're working with pasted JSON, use the direct conversion endpoint
-                        try {
-                            const jsonData = JSON.parse(jsonInput.value);
-                            fetch('/api/convert', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(jsonData)
-                            })
-                            .then(response => response.blob())
-                            .then(blob => {
-                                const url = window.URL.createObjectURL(blob);
-                                const a = document.createElement('a');
-                                a.href = url;
-                                a.download = outputFileName;
-                                document.body.appendChild(a);
-                                a.click();
-                                window.URL.revokeObjectURL(url);
-                                document.body.removeChild(a);
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                                // Fallback to client-side download
-                                downloadCSV(csvData, outputFileName);
-                            });
-                        } catch (error) {
-                            console.error('Error parsing JSON:', error);
-                            // Fallback to client-side download
-                            downloadCSV(csvData, outputFileName);
-                        }
-                    }
-                } else {
-                    // Standard browser download if not on Vercel or in Electron
+                // If we're working with pasted JSON, use the direct conversion endpoint
+                try {
+                    const jsonData = JSON.parse(jsonInput.value);
+                    fetch('/api/convert', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(jsonData)
+                    })
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = outputFileName;
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // Fallback to client-side download
+                        downloadCSV(csvData, outputFileName);
+                    });
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                    // Fallback to client-side download
                     downloadCSV(csvData, outputFileName);
                 }
             }
