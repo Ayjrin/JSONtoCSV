@@ -8,8 +8,16 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Detect if running on Vercel
+const isVercel = process.env.VERCEL === '1';
+
 // Enable CORS for all routes
 app.use(cors());
+
+// Handle Vercel path prefix if needed
+if (isVercel) {
+  console.log('Running on Vercel - using path prefix handling');
+}
 
 // Parse JSON request body
 app.use(express.json({ limit: '50mb' }));
