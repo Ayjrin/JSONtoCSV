@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "buildCommand": "cd api && npm install",
+  "outputDirectory": "public",
   "functions": {
     "api/server.js": {
       "memory": 1024,
