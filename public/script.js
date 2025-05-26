@@ -100,8 +100,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Click on drop area to trigger file input
-    dropArea.addEventListener('click', function() {
-        fileInput.click();
+    dropArea.addEventListener('click', function(e) {
+        // Only trigger file input if the click wasn't on the file input itself
+        if (e.target !== fileInput) {
+            fileInput.click();
+        }
+    });
+    
+    // Prevent clicks on the file input from bubbling up to the drop area
+    fileInput.addEventListener('click', function(e) {
+        e.stopPropagation();
     });
     
     // Validate JSON input
