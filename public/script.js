@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Variables
     let fileName = '';
     let csvData = '';
+    let droppedFile = null;
     
     // Event Listeners for Drag and Drop
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -82,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (files.length > 0) {
             const file = files[0];
             if (file.type === 'application/json' || file.name.endsWith('.json')) {
+                droppedFile = file; // Store the file object
                 fileName = file.name.replace('.json', '');
                 inputFileName.textContent = `File: ${file.name}`;
                 
